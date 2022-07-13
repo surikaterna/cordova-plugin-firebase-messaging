@@ -98,7 +98,12 @@ public class FirebaseMessagingPlugin extends ReflectiveCordovaPlugin {
 
     @CordovaMethod
     private void getToken(String type, final CallbackContext callbackContext) {
-        if (type.isEmpty()) {
+        // Fix to check if type is not null, which it can?
+        if (type != null && type.isEmpty()) {
+            Log.d(TAG, "getToken: type is null, type: " + type);
+            callbackContext.sendPluginResult(
+                    new PluginResult(PluginResult.Status.OK, (String)null));
+        } else {
             firebaseMessaging.getToken().addOnCompleteListener(cordova.getActivity(), task -> {
                 if (task.isSuccessful()) {
                     callbackContext.success(task.getResult());
@@ -106,9 +111,6 @@ public class FirebaseMessagingPlugin extends ReflectiveCordovaPlugin {
                     callbackContext.error(task.getException().getMessage());
                 }
             });
-        } else {
-            callbackContext.sendPluginResult(
-                    new PluginResult(PluginResult.Status.OK, (String)null));
         }
     }
 
