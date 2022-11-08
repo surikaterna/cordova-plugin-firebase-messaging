@@ -32,10 +32,6 @@ module.exports = {
     },
     getToken: function(type) {
         return new Promise(function(resolve, reject) {
-            if (type && typeof type !== "string") {
-                return reject(new TypeError("type argument must be a string"));
-            }
-
             exec(resolve, reject, PLUGIN_NAME, "getToken", [type || ""]);
         });
     },
