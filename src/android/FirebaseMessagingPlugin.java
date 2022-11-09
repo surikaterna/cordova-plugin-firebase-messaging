@@ -99,7 +99,7 @@ public class FirebaseMessagingPlugin extends ReflectiveCordovaPlugin {
     @CordovaMethod
     private void getToken(String type, final CallbackContext callbackContext) {
         // Fix to check if type is not null, which it can?
-        if (type != null && type.isEmpty()) {
+        if (type != null && !type.isEmpty()) {
             Log.d(TAG, "getToken: type is null, type: " + type);
             callbackContext.sendPluginResult(
                     new PluginResult(PluginResult.Status.OK, (String)null));
